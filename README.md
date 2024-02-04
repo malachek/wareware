@@ -2,7 +2,7 @@
 # wareware
 this is a summary of how to not fuck up the project for us programmers!
 includes general guidelines, what to do, and what NOT to do
-*written by @rmfandyplayz*
+*written by @rmfandyplayz (@rmfz on discord)*
 
 1. **DO NOT TOUCH `GameStateManager`**
 	- If you touch it, shit will break.
