@@ -30,7 +30,7 @@ for more nitty gritty stuff [visit here](https://docs.google.com/presentation/d/
 1. Use at most WASD (and mouse controller)
 2. Game should be **10 seconds** at most, and playable at **2.5x speed**
 	- for all time-based and physics-based events/actions in you game, multiply by `Time.deltaTime` or `Time.fixedDeltaTime` (in `FixedUpdate()`)
-	- for testing, you can incorporate your own timeScaling variable
+	- for testing, you can incorporate your own timeScaling variable - make sure this variable is set to '1f' upon committing
 	- ex. (in `FixedUpdate()`) `timer -= Time.fixedDeltaTime * m_personalTimeScaler`
 4. Cutscenes should be at max 5 seconds
 5. When the game time eventually speeds up, your game duration will go to about 1/4 of whatever original time you had
