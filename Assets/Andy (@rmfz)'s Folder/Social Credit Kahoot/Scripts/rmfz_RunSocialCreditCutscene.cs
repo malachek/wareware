@@ -28,8 +28,9 @@ public class rmfz_RunSocialCreditCutscene : MonoBehaviour
 
         while(countdownSecs > 0)
         {
-            timerText.text = $"{countdownSecs}";
+            timerText.text = $"{countdownSecs}"; //update text
 
+            //calculate how much to fill the loading circle n shi
             float elapsedTime = Time.deltaTime;
             float startFill = 1 - (countdownSecs / loadingCircleStartValue);
             float endFill = 1 - ((countdownSecs - 1) / loadingCircleStartValue);
