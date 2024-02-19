@@ -1,9 +1,8 @@
-
 # wareware
-guidelines for programmers
+guidelines for programmers so we dont have to mess anything up!!!
 
 1. **DO NOT TOUCH `GameStateManager`**
-	- Don't edit it.
+	- Edit = you prob will break something (by prob it means definitely)
 	- If you REALLY need to touch it, contact `@malachek` (probably on discord)
 2. **For organization's sake:**
 	- Each game is its own scene - place ALL SCENES in the scenes folder
@@ -21,7 +20,7 @@ guidelines for programmers
 			- If you must play "game 1" before "game 2", game 1 should be named something like `Game2`, and game 2 should be named `Game1`
 			- It's kinda like a ladder - the number goes down
 6. Other stuff
-	- DO NOT mess with `Time.timeScale`
+	- DO NOT mess with `Time.timeScale`(like, don't modify it)
 	- Pls don't touch other ppl's things
 	- Once again, DO NOT MESS WITH `GameStateManager`
 
