@@ -1,110 +1,175 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Audio;
 
 //This script is written by Andy (@rmfz)
 //Please contact me if you make any changes, or need to discuss something in this script!
 
-//lmao funny 69 overload function
+//lmao i had to rewrite this entire thing cuz of one overlook :sadge:
+
 public class rmfz_AudioManager : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public List<AudioClip> audioClips = new List<AudioClip>();
+    public rmfz_Audio[] audios;
+    private Dictionary<string, Coroutine> audioCoroutines = new Dictionary<string, Coroutine>();
+
+    private void Awake()
+    {
+        foreach(rmfz_Audio audio in audios)
+        {
+            audio.source = gameObject.AddComponent<AudioSource>();
+            audio.source.clip = audio.introSequence == null ? audio.clip : audio.introSequence;
+            audio.source.volume = audio.volume;
+            audio.source.pitch = audio.pitch;
+            audio.source.loop = audio.loopTrack;
+        }
+    }
 
     /// <summary>
     /// Plays an audio once.
     /// </summary>
-    /// <param name="audioClipListIndex"></param>
-    public void PlayAudio(int audioClipListIndex)
+    /// <param name="audioName"></param>
+    public void PlayAudio(string audioName)
     {
-        audioSource.clip = (audioClipListIndex < audioClips.Count) ? audioClips[audioClipListIndex] : null;
-        if (audioSource.clip != null)
+        rmfz_Audio audio = Array.Find(audios, audio => audio.audioName == audioName);
+        if(audio == null)
         {
-            audioSource.Play();
+            Debug.LogError("[rmfz_AudioManager.cs] audioName not found!");
+            return;
+        }
+        if(audio.introSequence != null)
+        {
+            StartCoroutine(PlayWithIntro(audio));
         }
         else
         {
-            Debug.LogError("[rmfz_AudioManager] Audio clip index input out of range!");
+            audio.source.Play();
         }
     }
+
+    //compliments PlayAudio()
+    IEnumerator PlayWithIntro(rmfz_Audio audio)
+    {
+        audio.source.Play();
+        yield return new WaitForSeconds(audio.source.clip.length);
+        audio.source.clip = audio.clip;
+        audio.source.loop = true;
+        audio.source.Play();
+    }
+
 
     /// <summary>
-    /// Plays an audio on loop until explicitly told to stop.   
+    /// Plays an audio on loop. Optionally, you can specify a number of times to loop. If not specified, will loop indefinitely till stopped.
     /// </summary>
-    /// <param name="audioClipListIndex"></param>
-    /// <param name="loopStart"></param>
-    /// <param name="loopEnd"></param>
-    public void PlayAudio(int audioClipListIndex, float loopStart, float loopEnd)
+    /// <param name="audioName"></param>
+    public void PlayAudioWithLoop(string audioName)
     {
-        audioSource.clip = (audioClipListIndex < audioClips.Count) ? audioClips[audioClipListIndex] : null;
-        if (audioSource.clip != null)
+        rmfz_Audio audio = Array.Find(audios, audio => audio.audioName == audioName);
+        if(audio != null)
         {
-            audioSource.loop = true;
-            audioSource.Play();
+            audio.source.loop = true;
+            audio.source.Play();
         }
         else
         {
-            Debug.LogError("[rmfz_AudioManager] Audio clip index input out of range!");
+            Debug.LogError("[rmfz_AudioManager.cs] audioName not found!");
+            return;
         }
     }
-
     /// <summary>
-    /// Plays an audio on loop, looping a certain number of times before stopping.
+    /// Plays an audio on loop. Optionally, you can specify a number of times to loop. If not specified, will loop indefinitely till stopped.
     /// </summary>
-    /// <param name="loopStart"></param>
-    /// <param name="loopEnd"></param>
-    /// <param name="timesToLoop"></param>
-    /// <param name="audioClipListIndex"></param>
-    public void PlayAudio(float loopStart, float loopEnd, int timesToLoop, int audioClipListIndex)
+    /// <param name="audioName"></param>
+    /// <param name="timesToLoop">Fill out this parameter if you want the audio to loop. If left blank, the audio will loop indefinitely till stopped.</param>
+    public void PlayAudioWithLoop(string audioName, int timesToLoop)
     {
-        audioSource.clip = (audioClipListIndex < audioClips.Count) ? audioClips[audioClipListIndex] : null;
-        if (audioSource.clip != null)
+        rmfz_Audio audio = Array.Find(audios, audio => audio.audioName == audioName);
+        if (audio != null && timesToLoop >= 0)
         {
-            audioSource.loop = true;
-            audioSource.Play();
+            if (audioCoroutines.ContainsKey(audioName))
+            {
+                StopCoroutine(audioCoroutines[audioName]);
+                audioCoroutines.Remove(audioName);
+            }
+
+            Coroutine coroutine = StartCoroutine(PlayAudioLoopCoroutine(audio, timesToLoop));
+            audioCoroutines[audioName] = coroutine;
         }
         else
         {
-            Debug.LogError("[rmfz_AudioManager] Audio clip index input out of range!");
+            if (timesToLoop < 0)
+            {
+                Debug.LogError("[rmfz_AudioManager.cs] bro why u specify a negative number of times to loop wtf man");
+                return;
+            }
+            else
+            {
+                Debug.LogError("[rmfz_AudioManager.cs] ur audio is somehow null so the code can't play it");
+                return;
+            }
         }
     }
-
+    IEnumerator PlayAudioLoopCoroutine(rmfz_Audio audio, int timesToLoop)
+    {
+        audio.source.loop = false;
+        for (int i = 0; i < timesToLoop; i++)
+        {
+            audio.source.Play();
+            yield return new WaitForSeconds(audio.source.clip.length);
+        }
+    }
+    
     /// <summary>
-    /// Plays an audio on loop, but you can specify an "intro", aka a portion of an audio that plays once, and another portion of the audio that plays on loop until stopped.
+    /// Stops a specifiable audio from playing.
     /// </summary>
-    /// <param name="audioClipListIndex"></param>
-    /// <param name="introStart"></param>
-    /// <param name="introStop"></param>
-    /// <param name="loopStart"></param>
-    /// <param name="loopStop"></param>
-    public void PlayAudio(int audioClipListIndex, float introStart, float introStop, float loopStart, float loopStop)
+    /// <param name="audioName"></param>
+    public void StopAudio(string audioName)
     {
-        audioSource.clip = (audioClipListIndex < audioClips.Count) ? audioClips[audioClipListIndex] : null;
-        if (audioSource.clip != null)
+        rmfz_Audio audio = Array.Find(audios, audio => audio.audioName == audioName);
+        if (audio == null)
         {
-            audioSource.time = introStart;
-            audioSource.Play();
-            float introDuration = audioSource.clip.length - introStart;
-            StartCoroutine(PlayLoopAfterIntroCoroutine(introDuration, loopStart, loopStop));
+            Debug.Log("[rmfz_AudioManager.cs] ur audio is somehow null so the code can't stop it");
+            return;
         }
         else
         {
-            Debug.LogError("[rmfz_AudioManager] Audio clip index input out of range!");
+            if (audioCoroutines.TryGetValue(audioName, out Coroutine coroutine))
+            {
+                StopCoroutine(coroutine);
+                audioCoroutines.Remove(audioName); //remove from dictionary
+            }
+            audio.source.Stop();
         }
     }
 
-    IEnumerator PlayLoopAfterIntroCoroutine(float introDuration, float loopStart, float loopEnd)
+    public void StopAllAudio()
     {
-        yield return new WaitForSeconds(introDuration);
-
-        audioSource.loop = true;
-        audioSource.time = loopStart;
-        audioSource.Play();
+        StopAllCoroutines();
+        foreach(rmfz_Audio audio in audios)
+        {
+            audio.source.Stop();
+        }
     }
+}
 
-    private void Update()
-    {
-        
-    }
+[System.Serializable]
+public class rmfz_Audio
+{
+    public string audioName;
+    public AudioClip clip;
+
+    [Range(0f, 1f)]
+    public float volume;
+
+    [Range(0.1f, 3f)]
+    public float pitch;
+
+    public bool loopTrack = false;
+
+    [HideInInspector]
+    public AudioSource source;
+
+    public int timesToLoop = 0;
+    public AudioClip introSequence; //it's what plays before "clip" plays and loops forever until stopped. there's no need to have anything in here.
 }

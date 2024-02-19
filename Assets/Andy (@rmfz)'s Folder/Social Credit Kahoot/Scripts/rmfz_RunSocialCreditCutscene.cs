@@ -20,11 +20,16 @@ public class rmfz_RunSocialCreditCutscene : MonoBehaviour
     }
 
     /// <summary>
-    /// Begins the countdown, the circle loading thingy, and whatnot.
+    /// Begins the countdown, the circle loading thingy, and 
     /// </summary>
+    /// <param name="nextSceneName"></param>
+    /// <returns></returns>
     IEnumerator StartCutsceneSequence(string nextSceneName)
     {
         float loadingCircleStartValue = countdownSecs;
+
+        FindObjectOfType<rmfz_AudioManager>().PlayAudio("maoZedong");
+
 
         while(countdownSecs > 0)
         {

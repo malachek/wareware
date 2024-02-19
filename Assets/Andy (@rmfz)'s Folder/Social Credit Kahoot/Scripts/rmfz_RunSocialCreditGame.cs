@@ -33,15 +33,28 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
     [SerializeField] Image checkmarkImage;
     [SerializeField] Image wrongXImage;
 
-    Coroutine countDownCoroutine;
+    [Header("Things for Win/Lose Sequence")]
+    [SerializeField] RawImage videoPlayerReference;
+    [SerializeField] RawImage plusSocialCreditReference;
+    [SerializeField] RawImage minusSocialCreditReference;
+    [SerializeField] Canvas loseCanvas;
 
-    private void Start()
+    [Header("Texts")]
+    [SerializeField] TextMeshProUGUI socialCreditText;
+
+    [Header("Others (script references, and such)")]
+    Coroutine countDownCoroutine;
+    [SerializeField] rmfz_AudioManager audioManager;
+
+
+    void Start()
     {
         countDownCoroutine = StartCoroutine(CountDown());
     }
 
     public void SelectTriangle(bool isCorrect)
     {
+        audioManager.PlayAudio("pop");
         if (countDownCoroutine != null)
         {
             StopCoroutine(countDownCoroutine);
@@ -51,12 +64,18 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
         {
             triangleButton.interactable = true;
             triangleButton.enabled = false;
+            StartCoroutine(LoseSequence());
+        }
+        else
+        {
+            StartCoroutine(WinSequence());
         }
     }
 
     public void SelectDiamond(bool isCorrect)
     {
-        if(countDownCoroutine != null)
+        audioManager.PlayAudio("pop");
+        if (countDownCoroutine != null)
         {
             StopCoroutine(countDownCoroutine);
         }
@@ -65,12 +84,18 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
         {
             diamondButton.interactable = true;
             diamondButton.enabled = false;
+            StartCoroutine(LoseSequence());
+        }
+        else
+        {
+            StartCoroutine(WinSequence());
         }
     }
 
     public void SelectCircle(bool isCorrect)
     {
-        if(countDownCoroutine != null)
+        audioManager.PlayAudio("pop");
+        if (countDownCoroutine != null)
         {
             StopCoroutine(countDownCoroutine);
         }
@@ -79,12 +104,18 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
         {
             circleButton.interactable = true;
             circleButton.enabled = false;
+            StartCoroutine(LoseSequence());
+        }
+        else
+        {
+            StartCoroutine(WinSequence());
         }
     }
 
     public void SelectSquare(bool isCorrect)
     {
-        if(countDownCoroutine != null)
+        audioManager.PlayAudio("pop");
+        if (countDownCoroutine != null)
         {
             StopCoroutine(countDownCoroutine);
         }
@@ -93,6 +124,11 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
         {
             squareButton.interactable = true;
             squareButton.enabled = false;
+            StartCoroutine(LoseSequence());
+        }
+        else
+        {
+            StartCoroutine(WinSequence());
         }
     }
 
@@ -106,22 +142,33 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
             StopCoroutine(countDownCoroutine);
         }
         HandleWinOrLoss();
+        StartCoroutine(LoseSequence());
     }
 
     /// <summary>
     /// Handles the winning animations and whatnot
     /// </summary>
-    public void WinSequence()
+    IEnumerator WinSequence()
     {
-
+        audioManager.PlayAudio("chinaFunnySound");
+        socialCreditText.text = "<b>13 779</b> social credits";
+        videoPlayerReference.texture = plusSocialCreditReference.texture;
+        yield return new WaitForSeconds(5);
+        GameStateManager.Win();
     }
 
     /// <summary>
     /// Handles the losing stuff and whatnot
     /// </summary>
-    public void LoseSequence()
+    IEnumerator LoseSequence()
     {
-
+        audioManager.PlayAudio("kahootResults");
+        socialCreditText.text = "<b>-29 986 236</b> social credits";
+        videoPlayerReference.texture = minusSocialCreditReference.texture;
+        yield return new WaitForSeconds(1f);
+        loseCanvas.gameObject.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        GameStateManager.LoseLife();
     }
 
     /// <summary>
@@ -142,6 +189,11 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
 
         correctAnswerButton.interactable = true;
         correctAnswerButton.enabled = false;
+        audioManager.StopAudio("kahoot");
+        audioManager.StopAudio("pyrocynicalChinese");
+        audioManager.StopAudio("superIdol");
+        audioManager.StopAudio("bingChilling");
+        audioManager.StopAudio("xueHuaPiaoPiao");
     }
 
     /// <summary>
@@ -152,6 +204,11 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
     {
         float loadingCircleStartValue = timerLength;
 
+        audioManager.PlayAudio("pyrocynicalChinese");
+        audioManager.PlayAudio("bingChilling");
+        audioManager.PlayAudio("kahoot");
+        audioManager.PlayAudio("superIdol");
+        audioManager.PlayAudio("xueHuaPiaoPiao");
         while (timerLength > 0)
         {
             countdownText.text = $"{timerLength}"; //update text
