@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Knife : MonoBehaviour
 {
+    public int count = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +15,10 @@ public class Knife : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (count == 5)
+        {
+            Debug.Log("Win Scene!");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -27,6 +31,7 @@ public class Knife : MonoBehaviour
         if (collider.gameObject.name == "Target")
         {
             Debug.Log("HIT");
+            count++;
             Destroy(collider.gameObject);
         }
     }
