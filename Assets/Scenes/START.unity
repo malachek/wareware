@@ -358,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Minis:
   - Win or Lose2
+  - Credit Card
   m_StartingLives: 3
   m_TimeScalingFactor: 0.05
   m_WinSound:
