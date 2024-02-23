@@ -34,12 +34,15 @@ public class MoneyHand : MonoBehaviour
             gamewon = true;
             TimerText.text = "You Won!";
             slotmachine.sprite = winscreen;
+            GameStateManager.Win();
+            
         }
         else if (GambleBar.fillAmount < 1.0f && time <= 0)
         {
             gamewon = false;
             TimerText.text = "You Lost, Goober.";
             slotmachine.sprite = losescreen;
+            GameStateManager.Lose();
         }
 
         if (Input.GetKeyDown(KeyCode.A) && time >= 0)
@@ -51,7 +54,6 @@ public class MoneyHand : MonoBehaviour
             }
         }
     }
-
     private IEnumerator ChangeSpriteForDuration(Sprite newSprite, float duration)
     {
         spriteRenderer.sprite = newSprite;
