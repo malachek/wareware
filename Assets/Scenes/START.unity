@@ -358,8 +358,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Minis:
   - Win or Lose2
+  - rmfz_SocialCreditKahoot1_Cutscene
   m_StartingLives: 3
-  m_TimeScalingFactor: 0.05
+  m_TimeScalingFactor: 0.15
   m_WinSound:
   - {fileID: 8300000, guid: 666b9b9eaa40278418a94d4e379ed223, type: 3}
   - {fileID: 8300000, guid: 08f9ec31c3716d349abfe158e81eaf58, type: 3}
@@ -407,7 +408,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -6672438282169379273, guid: e502b851801fa054285cef7e3dc692c8, type: 2}
   m_audioClip: {fileID: 8300000, guid: ec5c055289e597f4ebfc3ab96a8fd63f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
