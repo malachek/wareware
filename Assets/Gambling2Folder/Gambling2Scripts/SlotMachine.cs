@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SlotMachine : MonoBehaviour
 {
-    public MoneyHand MH;
+    public Gambler gambler;
     public Sprite winscreen;
     public Sprite losescreen;
     private SpriteRenderer slotMachineImage;
@@ -17,11 +17,11 @@ public class SlotMachine : MonoBehaviour
 
     void Update()
     {
-        if (MH.gamewon)
+        if (gambler.gamewon)
         {
             slotMachineImage.sprite = winscreen;
         }
-        else if (MH.gamewon)
+        else if (!gambler.gamewon)
         {
             slotMachineImage.sprite = losescreen;
         }

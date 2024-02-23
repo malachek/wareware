@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364f3af35678548cab7355032e3a177d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MH: {fileID: 0}
+  gambler: {fileID: 0}
   winscreen: {fileID: 0}
   losescreen: {fileID: 0}
 --- !u!1 &519420028
@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 1449218584}
   - component: {fileID: 1449218588}
   m_Layer: 0
-  m_Name: MoneyHand
+  m_Name: Gambler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

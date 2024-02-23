@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MoneyHand : MonoBehaviour
+public class Gambler : MonoBehaviour
 {
     public Sprite GiveMoney;
     public Sprite HoldMoney;
