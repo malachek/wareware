@@ -1,10 +1,11 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Knife : MonoBehaviour
 {
     public int count = 0;
+    float m_Length;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,8 @@ public class Knife : MonoBehaviour
     {
         if (count == 5)
         {
-            Debug.Log("Win Scene!");
+            //Debug.Log("Win Scene!");
+            GameStateManager.Win();
         }
     }
 
@@ -25,7 +27,8 @@ public class Knife : MonoBehaviour
     {
         if(collider.gameObject.name == "Finger")
         {
-            Debug.Log("End Scene");
+            //Debug.Log("End Scene");
+            GameStateManager.Lose();
         }
 
         if (collider.gameObject.name == "Target")
@@ -34,5 +37,11 @@ public class Knife : MonoBehaviour
             count++;
             Destroy(collider.gameObject);
         }
+    }
+
+    IEnumerator TickTime()
+    {
+        yield return new WaitForSeconds(m_Length);
+        GameStateManager.Lose();
     }
 }
