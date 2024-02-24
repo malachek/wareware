@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/rmfz_SocialCreditKahoot1_Game.unity
     guid: 3228e1f7d4ad4714084ffddf625740f8
+  - enabled: 1
+    path: Assets/Scenes/Credit Card.unity
+    guid: 98a12d31730b1e34b972836db96cf4b7
   m_configObjects: {}

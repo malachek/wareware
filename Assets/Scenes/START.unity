@@ -359,8 +359,9 @@ MonoBehaviour:
   m_Minis:
   - Win or Lose2
   - rmfz_SocialCreditKahoot1_Cutscene
-  m_StartingLives: 3
-  m_TimeScalingFactor: 0.15
+  - Credit Card
+  m_StartingLives: 5
+  m_TimeScalingFactor: 0.075
   m_WinSound:
   - {fileID: 8300000, guid: 666b9b9eaa40278418a94d4e379ed223, type: 3}
   - {fileID: 8300000, guid: 08f9ec31c3716d349abfe158e81eaf58, type: 3}
