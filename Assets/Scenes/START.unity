@@ -360,6 +360,12 @@ MonoBehaviour:
   - Win or Lose2
   - rmfz_SocialCreditKahoot1_Cutscene
   - Credit Card
+  - ScaryMaze
+  - ScaryMaze
+  - ScaryMaze
+  - ScaryMaze
+  - ScaryMaze
+  - ScaryMaze
   m_StartingLives: 5
   m_TimeScalingFactor: 0.075
   m_WinSound:
