@@ -1435,7 +1435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 642312137}
-  countdownSecs: 5
+  countdownSecs: 3
   nextSceneName: rmfz_SocialCreditKahoot1_Game
   loadingCircle: {fileID: 1946991940}
 --- !u!4 &1920656078

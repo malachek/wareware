@@ -2654,7 +2654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4178ecfbcdaf42d4db68991b9e8d3212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerLength: 10
+  timerLength: 5
   correctAnswerImage: {fileID: 1892522937}
   correctAnswerButton: {fileID: 294560122}
   countdownCircle: {fileID: 1497174265}

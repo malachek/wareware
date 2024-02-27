@@ -68,10 +68,10 @@ public class GameStateManager : MonoBehaviour
     static GAMESTATE m_State;
 
     public delegate void MiniInit();
-    public delegate IEnumerator GameOverDelegate();
-
-    public static GameOverDelegate OnGameOver;
     public static MiniInit OnMiniInit;
+
+    //public delegate IEnumerator GameOverDelegate();
+    //public static GameOverDelegate OnGameOver;
 
     private void Awake()
     {

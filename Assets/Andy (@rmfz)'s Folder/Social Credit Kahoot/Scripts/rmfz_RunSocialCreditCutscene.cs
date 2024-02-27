@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class rmfz_RunSocialCreditCutscene : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    [SerializeField] private int countdownSecs = 5;
+    [SerializeField] private int countdownSecs = 3;
     [SerializeField] private string nextSceneName;
     [SerializeField] private Image loadingCircle;
 

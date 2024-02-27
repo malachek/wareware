@@ -153,7 +153,7 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
         audioManager.PlayAudio("chinaFunnySound");
         socialCreditText.text = "<b>13 779</b> social credits";
         videoPlayerReference.texture = plusSocialCreditReference.texture;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2f);
         GameStateManager.Win();
     }
 
@@ -165,10 +165,10 @@ public class rmfz_RunSocialCreditGame : MonoBehaviour
         audioManager.PlayAudio("kahootResults");
         socialCreditText.text = "<b>-29 986 236</b> social credits";
         videoPlayerReference.texture = minusSocialCreditReference.texture;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         loseCanvas.gameObject.SetActive(true);
-        yield return new WaitForSeconds(4f);
-        GameStateManager.LoseLife();
+        yield return new WaitForSeconds(1.5f);
+        GameStateManager.Lose();
     }
 
     /// <summary>
