@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotMachine : MonoBehaviour
+public class SlotMachineSprite : MonoBehaviour
 {
-    public Gambler gambler;
+    public Gambling2GM gm;
     public Sprite winscreen;
     public Sprite losescreen;
     private SpriteRenderer slotMachineImage;
@@ -17,11 +17,11 @@ public class SlotMachine : MonoBehaviour
 
     void Update()
     {
-        if (gambler.gamewon)
+        if (gm.gamewon)
         {
             slotMachineImage.sprite = winscreen;
         }
-        else if (!gambler.gamewon)
+        else if (!gm.gamewon)
         {
             slotMachineImage.sprite = losescreen;
         }

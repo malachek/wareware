@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Gambler : MonoBehaviour
+public class Gambling2GM : MonoBehaviour
 {
     public Sprite GiveMoney;
     public Sprite HoldMoney;
@@ -32,7 +32,7 @@ public class Gambler : MonoBehaviour
         if (GambleBar.fillAmount >= 1.0f && time >= 0)
         {
             gamewon = true;
-            TimerText.text = "You Won!";
+            TimerText.text = "Nice job, Goober";
             slotmachine.sprite = winscreen;
             GameStateManager.Win();
             
@@ -40,7 +40,7 @@ public class Gambler : MonoBehaviour
         else if (GambleBar.fillAmount < 1.0f && time <= 0)
         {
             gamewon = false;
-            TimerText.text = "You Lost, Goober.";
+            TimerText.text = "You lost, Goober";
             slotmachine.sprite = losescreen;
             GameStateManager.Lose();
         }
@@ -62,7 +62,7 @@ public class Gambler : MonoBehaviour
     }
     private IEnumerator FillGambleBar()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         GambleBar.fillAmount += 0.06f;
     }
 }

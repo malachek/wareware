@@ -1,11 +1,13 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Timer : MonoBehaviour
+public class TimerText : MonoBehaviour
 {
-    public float timeRemaining = 10;
+    public Gambling2GM gm;
+    float timeRemaining;
     public bool timerIsRunning = false;
     [SerializeField] TextMeshProUGUI timerText;
     void Start()
@@ -17,9 +19,9 @@ public class Timer : MonoBehaviour
     {
         if (timerIsRunning)
         {
+            timeRemaining = gm.time;
             if (timeRemaining > 0)
             {
-                timeRemaining -= Time.deltaTime;
                 int roundedTime = Mathf.RoundToInt(timeRemaining);
                 timerText.text = roundedTime.ToString();
             }
@@ -31,4 +33,3 @@ public class Timer : MonoBehaviour
         }
     }
 }
-
