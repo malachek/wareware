@@ -1,12 +1,11 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TimerText : MonoBehaviour
+public class TimerTextG1 : MonoBehaviour
 {
-    public Gambling2GM gm;
+    public G1Button gm;
     float timeRemaining;
     public bool timerIsRunning = false;
     [SerializeField] TextMeshProUGUI timerText;
@@ -24,7 +23,7 @@ public class TimerText : MonoBehaviour
             {
                 if (gm.gamewon)
                 {
-                    timerText.text = "Nice job, goober";
+                    timerText.text = "We have a winner?!?!?!";
                 }
                 else
                 {
@@ -34,7 +33,7 @@ public class TimerText : MonoBehaviour
             }
             else if (timeRemaining <= 0 && !gm.gamewon)
             {
-                timerText.text = "No bazillion bucks for you, goober";
+                timerText.text = "Stand proud, ur bad";
                 timerIsRunning = false;
             }
         }

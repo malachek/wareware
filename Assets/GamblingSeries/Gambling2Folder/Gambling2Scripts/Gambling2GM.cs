@@ -8,7 +8,6 @@ public class Gambling2GM : MonoBehaviour
     public Sprite GiveMoney;
     public Sprite HoldMoney;
     public Image GambleBar;
-    [SerializeField] TextMeshProUGUI TimerText;
 
     public float time = 10f;
     public float spriteChangeDuration = 1.0f;
@@ -32,7 +31,6 @@ public class Gambling2GM : MonoBehaviour
         if (GambleBar.fillAmount >= 1.0f && time >= 0)
         {
             gamewon = true;
-            TimerText.text = "Nice job, Goober";
             slotmachine.sprite = winscreen;
             GameStateManager.Win();
             
@@ -40,7 +38,6 @@ public class Gambling2GM : MonoBehaviour
         else if (GambleBar.fillAmount < 1.0f && time <= 0)
         {
             gamewon = false;
-            TimerText.text = "You lost, Goober";
             slotmachine.sprite = losescreen;
             GameStateManager.Lose();
         }
