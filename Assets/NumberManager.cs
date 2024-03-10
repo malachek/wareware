@@ -6,7 +6,10 @@ using TMPro;
 public class NumberManager : MonoBehaviour
 {
     public GameObject[] textBoxes;
-    public float countdownTime;
+
+    [Header("Pay Button")]
+
+    public GameObject payButton;
 
     private int tbIndex = 0;
     private float counter = 0f;
@@ -14,10 +17,6 @@ public class NumberManager : MonoBehaviour
     private TextMeshProUGUI currentBox;
     private TextBoxInfo currentBoxInfo;
 
-    private void Awake()
-    {
-        StartCoroutine(TickTime());
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +27,9 @@ public class NumberManager : MonoBehaviour
 
     public void UpdateNumber(string number)
     {
+        currentBox.text += number;
+        counter++;
+
         if (counter >= currentBoxInfo.numberLimit)
         {
             if (tbIndex < textBoxes.Length - 1)
@@ -42,18 +44,10 @@ public class NumberManager : MonoBehaviour
             else
             {
                 //Won
-                GameStateManager.Win();
+                payButton.SetActive(true);
                 return;
             }
         }
-
-        currentBox.text += number;
-        counter++;
     }
 
-    IEnumerator TickTime()
-    {
-        yield return new WaitForSeconds(countdownTime);
-        GameStateManager.Lose();
-    }
 }
