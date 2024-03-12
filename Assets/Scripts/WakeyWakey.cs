@@ -15,5 +15,9 @@ public class WakeyWakey : MonoBehaviour
         yield return new WaitForSeconds(wakeUpTime);
 
         joeBackground.sprite = sleepyJoeSprite;
+
+        yield return new WaitForSeconds(wakeUpTime);
+
+        GameStateManager.Win();
     }
 }

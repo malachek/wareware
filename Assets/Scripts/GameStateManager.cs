@@ -27,6 +27,7 @@ public class GameStateManager : MonoBehaviour
     float m_TimeScalingFactor;
     float m_CurrentTimeScale = 1.0f;
 
+
     [SerializeField]
     List<AudioClip> m_WinSound, m_LoseSound, m_GameOverGoodSound, m_GameOverBadSound;
 
@@ -70,6 +71,9 @@ public class GameStateManager : MonoBehaviour
     public delegate void MiniInit();
     public static MiniInit OnMiniInit;
 
+    public delegate void MiniExit();
+    public static MiniExit OnMiniExit;
+
     //public delegate IEnumerator GameOverDelegate();
     //public static GameOverDelegate OnGameOver;
 
@@ -105,21 +109,30 @@ public class GameStateManager : MonoBehaviour
         if (_instance.m_Minis.Count > 0)
         {
             SceneManager.LoadScene(_instance.m_MainSceneName);
-            if (OnMiniInit != null)
+            /*if (OnMiniInit != null)
             {
                 OnMiniInit();
-            }
+            }*/
         }
     }
 
     public static void LoadMini()
     {
-        m_CurrentMiniIndex = Random.Range(0, m_MiniCount);
+        //remove back to back of the same
+        int NewMiniIndex = Random.Range(0, m_MiniCount - 1);
+        if(NewMiniIndex >= m_CurrentMiniIndex) { NewMiniIndex++; }
+        m_CurrentMiniIndex = NewMiniIndex;
+
+        //m_CurrentMiniIndex = Random.Range(0, m_MiniCount);
         m_CurrentMiniName = _instance.m_Minis[m_CurrentMiniIndex];
 
         Debug.Log($"Loading Mini Game # {m_CurrentMiniIndex} - {m_CurrentMiniName}");
 
         m_State = GAMESTATE.LOADING;
+        if (OnMiniInit != null)
+        {
+            OnMiniInit();
+        }
         //coroutine with animation
         SceneManager.LoadScene(m_CurrentMiniName);
         m_State = GAMESTATE.PLAYING;
@@ -154,6 +167,11 @@ public class GameStateManager : MonoBehaviour
         _instance.m_SFXAudioSource.pitch = _instance.m_CurrentTimeScale;
 
         m_State = GAMESTATE.LOADING;
+
+        if(OnMiniExit!= null)
+        {
+            OnMiniExit();
+        }
         //coroutine with animation
         m_State = GAMESTATE.MAIN;
 
@@ -167,8 +185,13 @@ public class GameStateManager : MonoBehaviour
         AudioClip randomClip = _instance.m_LoseSound[Random.Range(0, _instance.m_LoseSound.Count)];
         _instance.m_SFXAudioSource.clip = randomClip;
         _instance.m_SFXAudioSource.Play();
-
+        
         m_State = GAMESTATE.LOADING;
+
+        if (OnMiniExit != null)
+        {
+            OnMiniExit();
+        }
         //coroutine with animation
         m_State = GAMESTATE.MAIN;
 
