@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowCursor : MonoBehaviour
 {
-
+    [SerializeField] float m_Length;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +15,12 @@ public class FollowCursor : MonoBehaviour
     void Update()
     {
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector2(cursorPos.x , cursorPos.y);
+        transform.position = new Vector2(cursorPos.x, cursorPos.y);
 
+    }
+    IEnumerator TickTime()
+    {
+        yield return new WaitForSeconds(m_Length);
+        GameStateManager.Lose();
     }
 }

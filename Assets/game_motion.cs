@@ -8,6 +8,7 @@ public class game_motion : MonoBehaviour
     [SerializeField] float scaleability = 1f;
     [SerializeField] float displacement_scale_y = 1.2f;
     [SerializeField] float displacement_scale_x = 1.15f;
+    [SerializeField] float m_Length;
 
     private float halfed_width;
     private float halfed_height;
@@ -39,5 +40,11 @@ public class game_motion : MonoBehaviour
     void Update()
     {
        transform.position = new Vector3(pos_x, pos_y, 0);
+    }
+
+    IEnumerator TickTime()
+    {
+        yield return new WaitForSeconds(m_Length);
+        GameStateManager.Lose();
     }
 }
