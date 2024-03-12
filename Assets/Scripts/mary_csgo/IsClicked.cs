@@ -36,7 +36,7 @@ public class IsClicked : MonoBehaviour
                 
                 anim.SetBool(PRESS_ANIM, true);
             }
-
+            GameStateManager.Lose();
             Debug.Log(hit.collider.gameObject.name);
             
         }
