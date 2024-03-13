@@ -12,7 +12,10 @@ public class HandMovements : MonoBehaviour
     public float pullBackForce = 2f;
 
     [Space(10)]
+    [Header("Right Hand Only")]
     public Sprite clapSprite;
+    public GameObject emphasisEffect;
+    public GameObject spaceBarDisplay;
 
     [Space(10)]
     [Header("Angle Triggers Win")]
@@ -39,9 +42,13 @@ public class HandMovements : MonoBehaviour
     private bool isClapping = false;
     private float zRotation = 0f;
 
+    private AudioQueue audioController;
+
     private void Start()
     {
         handImage = GetComponentInChildren<Image>();
+
+        audioController = GetComponentInParent<AudioQueue>();
     }
 
     // Update is called once per frame
@@ -90,6 +97,8 @@ public class HandMovements : MonoBehaviour
     {
         isClapping = true;
         rotationSpeed = fastRotationSpeed;
+
+        if (isRightHand) spaceBarDisplay.SetActive(false);
     }
 
     private void Clap()
@@ -100,15 +109,12 @@ public class HandMovements : MonoBehaviour
         {
             handImage.sprite = clapSprite;
 
+            audioController.ClapSound();
+            emphasisEffect.SetActive(true);
+            
             wakeUpScript = GetComponent<WakeyWakey>();
-
             StartCoroutine(wakeUpScript.WakeUp());
         }
-
-        //change sprite
-        //sound effect
-        //other effects
-        //jow biden awake
     }
 
 }
