@@ -611,7 +611,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0.012152195, b: 1, a: 1}
+  m_BackGroundColor: {r: 0.597165, g: 0.43867922, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1515,6 +1515,7 @@ MonoBehaviour:
   winscreen: {fileID: 21300000, guid: a0107c7db195a45d1bfeb76640fe88f5, type: 3}
   losescreen: {fileID: 21300000, guid: a1317b08802e84a95911158dd1f362a6, type: 3}
   playerhand: {fileID: 1449218586}
+  speechBubble: {fileID: 423073772}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

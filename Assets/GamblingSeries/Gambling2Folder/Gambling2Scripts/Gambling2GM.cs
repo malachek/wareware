@@ -9,7 +9,7 @@ public class Gambling2GM : MonoBehaviour
     public Sprite HoldMoney;
     public Image GambleBar;
 
-    public float time = 10f;
+    public float time = 10.0f;
     public bool gamewon;
 
     public SpriteRenderer slotmachine;
@@ -20,16 +20,20 @@ public class Gambling2GM : MonoBehaviour
 
     private AudioSource _audiosource;
 
+    public SpriteRenderer speechBubble;
+
     void Start()
     {
         GambleBar.fillAmount = 0;
         _audiosource = GetComponent<AudioSource>();
         _audiosource.Play();
+        StartCoroutine(FlashSpeechBubble());
+        StartCoroutine(TickTime());
     }
 
     void Update()
     {
-        time -= Time.deltaTime;
+        time -= Time.deltaTime * Time.timeScale;
         if (GambleBar.fillAmount >= 1.0f && time >= 0)
         {
             gamewon = true;
@@ -63,5 +67,19 @@ public class Gambling2GM : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         GambleBar.fillAmount += 0.06f;
+    }
+    private IEnumerator FlashSpeechBubble()
+    {
+        while (true)
+        {
+            speechBubble.enabled = !speechBubble.enabled;
+
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+    IEnumerator TickTime()
+    {
+        yield return new WaitForSeconds(time);
+        GameStateManager.Lose();
     }
 }

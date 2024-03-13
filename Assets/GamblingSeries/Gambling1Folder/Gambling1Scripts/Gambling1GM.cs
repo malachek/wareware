@@ -30,6 +30,7 @@ public class Gambling1GM : MonoBehaviour
         btn.onClick.AddListener(TaskOnClick);
         _audiosource = GetComponent<AudioSource>();
         KObar.fillAmount = 1;
+        StartCoroutine(TickTime());
     }
     private void Update()
     {
@@ -67,5 +68,10 @@ public class Gambling1GM : MonoBehaviour
         Boxer.sprite = BoxerHurt;
         yield return new WaitForSeconds(0.2f);
         Boxer.sprite = BoxerIdle;
+    }
+    IEnumerator TickTime()
+    {
+        yield return new WaitForSeconds(time);
+        GameStateManager.Lose();
     }
 }
