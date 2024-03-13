@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class AnteaterTimer : MonoBehaviour
 {
-    [SerializeField] Animator anim;
+    Animator anim;
+    private readonly float ANIMATION_DURATION = 1f;
     // Start is called before the first frame update
     void Start()
     {
-        anim.GetComponent<Animator>();
-        anim.SetFloat("Speed", 1f);
+        anim = GetComponent<Animator>();
         anim.gameObject.SetActive(false);
         GameStateManager.OnMiniInit += TimerEnabler;
         GameStateManager.OnMiniExit += TimerDisabler;
-        Debug.Log(anim.name);
-        Debug.Log(anim.GetType());
-
     }
 
     // Update is called once per frame
-  
-    void TimerEnabler()
+
+    void TimerEnabler(float miniTime)
     {
         Debug.Log("TimerEnabler");
         anim.gameObject.SetActive(true);
-        anim.Play("TimerAnimation");
+        anim.SetTrigger("StartTimer");
+        Debug.Log(miniTime);
+        anim.SetFloat("Speed", ANIMATION_DURATION / miniTime);
+        //anim.Play("TimerAnimation");
     }
     void TimerDisabler()
     {

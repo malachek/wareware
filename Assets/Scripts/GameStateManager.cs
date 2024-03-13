@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using static GameStateManager;
+using System.Linq;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -68,7 +70,7 @@ public class GameStateManager : MonoBehaviour
 
     static GAMESTATE m_State;
 
-    public delegate void MiniInit();
+    public delegate void MiniInit(float miniTime);
     public static MiniInit OnMiniInit;
 
     public delegate void MiniExit();
@@ -120,7 +122,7 @@ public class GameStateManager : MonoBehaviour
     {
         //remove back to back of the same
         int NewMiniIndex = Random.Range(0, m_MiniCount - 1);
-        if(NewMiniIndex >= m_CurrentMiniIndex) { NewMiniIndex++; }
+        if (NewMiniIndex >= m_CurrentMiniIndex) { NewMiniIndex++; }
         m_CurrentMiniIndex = NewMiniIndex;
 
         //m_CurrentMiniIndex = Random.Range(0, m_MiniCount);
@@ -129,16 +131,53 @@ public class GameStateManager : MonoBehaviour
         Debug.Log($"Loading Mini Game # {m_CurrentMiniIndex} - {m_CurrentMiniName}");
 
         m_State = GAMESTATE.LOADING;
-        if (OnMiniInit != null)
-        {
-            OnMiniInit();
-        }
+
         //coroutine with animation
         SceneManager.LoadScene(m_CurrentMiniName);
+
+        _instance.StartCoroutine(waitForSceneLoad());
+    }
+
+
+    static IEnumerator waitForSceneLoad()
+    {
+        while (!SceneManager.GetActiveScene().name.Equals(m_CurrentMiniName))
+        {
+            yield return null;
+        }
+
+        if (OnMiniInit != null)
+        {
+            var timeables = new List<ITimeable>();
+            Debug.Log(SceneManager.GetActiveScene().name);
+            var rootObjs = SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach(var root in rootObjs)
+            {
+                timeables.AddRange(root.GetComponentsInChildren<ITimeable>(true));
+            }
+            
+            
+            /*Debug.Log($"Root Objs {rootObjs} | Length: {rootObjs.Count()}");
+            foreach(var gameObject in rootObjs)
+            {
+                Debug.Log($"{gameObject.name} | {gameObject}");
+            }*/
+
+            Debug.Log($"Timeables {timeables} | Length: {timeables.Count()}");
+
+            if(timeables.Count != 1)
+            {
+                Debug.LogError($"{timeables.Count} ITimeables found in scene");
+            }
+
+            ITimeable myTimeable = timeables[0];
+            Debug.Log($"Timeable Found: {myTimeable.GetType()}");
+            OnMiniInit(myTimeable.GetTime());
+        }
         m_State = GAMESTATE.PLAYING;
     }
 
-  
+
     public static void Win()
     {
         Debug.Log("WIN");
