@@ -6,6 +6,8 @@ public class SkyTimer : MonoBehaviour
 {
     public float countdownTime;
 
+    public bool wonGame = false;
+
     private void Awake()
     {
         StartCoroutine(TickTime());
@@ -14,6 +16,11 @@ public class SkyTimer : MonoBehaviour
     IEnumerator TickTime()
     {
         yield return new WaitForSeconds(countdownTime);
-        GameStateManager.Lose();
+        if (!wonGame) GameStateManager.Lose();
+    }
+
+    public void GameWon()
+    {
+        wonGame = true;
     }
 }

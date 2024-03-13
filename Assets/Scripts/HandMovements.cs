@@ -16,6 +16,7 @@ public class HandMovements : MonoBehaviour
     public Sprite clapSprite;
     public GameObject emphasisEffect;
     public GameObject spaceBarDisplay;
+    public SkyTimer timer;
 
     [Space(10)]
     [Header("Angle Triggers Win")]
@@ -98,7 +99,11 @@ public class HandMovements : MonoBehaviour
         isClapping = true;
         rotationSpeed = fastRotationSpeed;
 
-        if (isRightHand) spaceBarDisplay.SetActive(false);
+        if (isRightHand)
+        {
+            spaceBarDisplay.SetActive(false);
+            timer.GameWon();
+        }
     }
 
     private void Clap()
