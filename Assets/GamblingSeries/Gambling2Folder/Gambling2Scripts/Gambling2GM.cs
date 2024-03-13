@@ -10,19 +10,21 @@ public class Gambling2GM : MonoBehaviour
     public Image GambleBar;
 
     public float time = 10f;
-    public float spriteChangeDuration = 1.0f;
     public bool gamewon;
 
     public SpriteRenderer slotmachine;
     public Sprite winscreen;
     public Sprite losescreen;
 
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer playerhand;
+
+    private AudioSource _audiosource;
 
     void Start()
     {
         GambleBar.fillAmount = 0;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _audiosource = GetComponent<AudioSource>();
+        _audiosource.Play();
     }
 
     void Update()
@@ -33,7 +35,7 @@ public class Gambling2GM : MonoBehaviour
             gamewon = true;
             slotmachine.sprite = winscreen;
             GameStateManager.Win();
-            
+
         }
         else if (GambleBar.fillAmount < 1.0f && time <= 0)
         {
@@ -44,18 +46,18 @@ public class Gambling2GM : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A) && time >= 0)
         {
-            StartCoroutine(ChangeSpriteForDuration(GiveMoney, spriteChangeDuration));
             if (GambleBar.fillAmount < 1.0f)
             {
                 StartCoroutine(FillGambleBar());
+                StartCoroutine(ChangeSpriteForDuration());
             }
         }
     }
-    private IEnumerator ChangeSpriteForDuration(Sprite newSprite, float duration)
+    private IEnumerator ChangeSpriteForDuration()
     {
-        spriteRenderer.sprite = newSprite;
-        yield return new WaitForSeconds(duration);
-        spriteRenderer.sprite = HoldMoney;
+        playerhand.sprite = GiveMoney;
+        yield return new WaitForSeconds(1.0f);
+        playerhand.sprite = HoldMoney;
     }
     private IEnumerator FillGambleBar()
     {

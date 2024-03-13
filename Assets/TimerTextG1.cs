@@ -5,7 +5,7 @@ using TMPro;
 
 public class TimerTextG1 : MonoBehaviour
 {
-    public G1Button gm;
+    public Gambling1GM gm;
     float timeRemaining;
     public bool timerIsRunning = false;
     [SerializeField] TextMeshProUGUI timerText;
