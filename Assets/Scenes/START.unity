@@ -362,6 +362,7 @@ MonoBehaviour:
   - Credit Card
   - ScaryMaze
   - Sleepy Joe
+  - drunk driving
   m_StartingLives: 5
   m_TimeScalingFactor: 0.075
   m_WinSound:
