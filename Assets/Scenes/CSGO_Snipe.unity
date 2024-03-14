@@ -172,7 +172,7 @@ MonoBehaviour:
   scaleability: 3
   displacement_scale_y: 1.2
   displacement_scale_x: 1.2
-  m_Length: 0
+  m_Length: 5
 --- !u!1 &772098208
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1854237121}
+  m_Length: 0
+  clicked: 0
 --- !u!1 &1156143848
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +742,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1854237121}
-  m_Length: 0
 --- !u!212 &1510016699
 SpriteRenderer:
   m_ObjectHideFlags: 0
