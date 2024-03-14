@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 //This script is written by Andy (@rmfz)
 //Please contact me if you make any changes, or need to discuss something in this script!
-public class rmfz_RunSocialCreditCutscene : MonoBehaviour
+public class rmfz_RunSocialCreditCutscene : MonoBehaviour, ITimeable
 {
     public TextMeshProUGUI timerText;
     [SerializeField] private int countdownSecs = 3;
@@ -24,6 +24,11 @@ public class rmfz_RunSocialCreditCutscene : MonoBehaviour
     /// </summary>
     /// <param name="nextSceneName"></param>
     /// <returns></returns>
+    
+    public float GetTime()
+    {
+        return 8f; //it's 2 scenes so
+    }
     IEnumerator StartCutsceneSequence(string nextSceneName)
     {
         float loadingCircleStartValue = countdownSecs;

@@ -56,7 +56,7 @@ public class HandMovements : MonoBehaviour
     void Update()
     {
         zRotation = transform.rotation.eulerAngles.z;
-        Debug.Log(zRotation);
+        //Debug.Log(zRotation);
 
         if (allowRotate)
         {
