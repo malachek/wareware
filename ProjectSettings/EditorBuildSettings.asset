@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScaryMaze.unity
     guid: ad78f70a1095b01438b063019882ba57
+  - enabled: 1
+    path: Assets/Scenes/Sleepy Joe.unity
+    guid: 88edc49339fa20a408ec040f5e5285ce
   m_configObjects: {}

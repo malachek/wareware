@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WinOrLoseGane : MonoBehaviour
+public class WinOrLoseGane : MonoBehaviour, ITimeable
 {
     [SerializeField]
     float m_Length;
+    
+    
     private void Awake()
     {
         StartCoroutine(TickTime());
@@ -27,4 +29,10 @@ public class WinOrLoseGane : MonoBehaviour
         yield return new WaitForSeconds(m_Length);
         GameStateManager.Lose();
     }
+
+    public float GetTime()
+    {
+        return m_Length;
+    }
 }
+

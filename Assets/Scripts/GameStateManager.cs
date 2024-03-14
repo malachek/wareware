@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using static GameStateManager;
+using System.Linq;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -26,6 +28,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField]
     float m_TimeScalingFactor;
     float m_CurrentTimeScale = 1.0f;
+
 
     [SerializeField]
     List<AudioClip> m_WinSound, m_LoseSound, m_GameOverGoodSound, m_GameOverBadSound;
@@ -67,8 +70,11 @@ public class GameStateManager : MonoBehaviour
 
     static GAMESTATE m_State;
 
-    public delegate void MiniInit();
+    public delegate void MiniInit(float miniTime);
     public static MiniInit OnMiniInit;
+
+    public delegate void MiniExit();
+    public static MiniExit OnMiniExit;
 
     //public delegate IEnumerator GameOverDelegate();
     //public static GameOverDelegate OnGameOver;
@@ -105,27 +111,73 @@ public class GameStateManager : MonoBehaviour
         if (_instance.m_Minis.Count > 0)
         {
             SceneManager.LoadScene(_instance.m_MainSceneName);
-            if (OnMiniInit != null)
+            /*if (OnMiniInit != null)
             {
                 OnMiniInit();
-            }
+            }*/
         }
     }
 
     public static void LoadMini()
     {
-        m_CurrentMiniIndex = Random.Range(0, m_MiniCount);
+        //remove back to back of the same
+        int NewMiniIndex = Random.Range(0, m_MiniCount - 1);
+        if (NewMiniIndex >= m_CurrentMiniIndex) { NewMiniIndex++; }
+        m_CurrentMiniIndex = NewMiniIndex;
+
+        //m_CurrentMiniIndex = Random.Range(0, m_MiniCount);
         m_CurrentMiniName = _instance.m_Minis[m_CurrentMiniIndex];
 
         Debug.Log($"Loading Mini Game # {m_CurrentMiniIndex} - {m_CurrentMiniName}");
 
         m_State = GAMESTATE.LOADING;
+
         //coroutine with animation
         SceneManager.LoadScene(m_CurrentMiniName);
+
+        _instance.StartCoroutine(waitForSceneLoad());
+    }
+
+
+    static IEnumerator waitForSceneLoad()
+    {
+        while (!SceneManager.GetActiveScene().name.Equals(m_CurrentMiniName))
+        {
+            yield return null;
+        }
+
+        if (OnMiniInit != null)
+        {
+            var timeables = new List<ITimeable>();
+            Debug.Log(SceneManager.GetActiveScene().name);
+            var rootObjs = SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach(var root in rootObjs)
+            {
+                timeables.AddRange(root.GetComponentsInChildren<ITimeable>(true));
+            }
+            
+            
+            /*Debug.Log($"Root Objs {rootObjs} | Length: {rootObjs.Count()}");
+            foreach(var gameObject in rootObjs)
+            {
+                Debug.Log($"{gameObject.name} | {gameObject}");
+            }*/
+
+            Debug.Log($"Timeables {timeables} | Length: {timeables.Count()}");
+
+            if(timeables.Count != 1)
+            {
+                Debug.LogError($"{timeables.Count} ITimeables found in scene");
+            }
+
+            ITimeable myTimeable = timeables[0];
+            Debug.Log($"Timeable Found: {myTimeable.GetType()}");
+            OnMiniInit(myTimeable.GetTime());
+        }
         m_State = GAMESTATE.PLAYING;
     }
 
-  
+
     public static void Win()
     {
         Debug.Log("WIN");
@@ -154,6 +206,11 @@ public class GameStateManager : MonoBehaviour
         _instance.m_SFXAudioSource.pitch = _instance.m_CurrentTimeScale;
 
         m_State = GAMESTATE.LOADING;
+
+        if(OnMiniExit!= null)
+        {
+            OnMiniExit();
+        }
         //coroutine with animation
         m_State = GAMESTATE.MAIN;
 
@@ -167,8 +224,13 @@ public class GameStateManager : MonoBehaviour
         AudioClip randomClip = _instance.m_LoseSound[Random.Range(0, _instance.m_LoseSound.Count)];
         _instance.m_SFXAudioSource.clip = randomClip;
         _instance.m_SFXAudioSource.Play();
-
+        
         m_State = GAMESTATE.LOADING;
+
+        if (OnMiniExit != null)
+        {
+            OnMiniExit();
+        }
         //coroutine with animation
         m_State = GAMESTATE.MAIN;
 
