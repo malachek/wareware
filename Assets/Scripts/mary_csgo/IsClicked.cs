@@ -2,29 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsClicked : MonoBehaviour
+public class IsClicked : MonoBehaviour, ITimeable
 {
     public static bool mary_headshot = false;
 
     [SerializeField] Animator anim;
-    public float m_Length = 5.0f;
+    [SerializeField] float m_Length;
     const string PRESS_ANIM = "clicked_screen";
     public bool clicked = false;
+
+    private float m_Timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_Timer = m_Length;
     }
 
     // Update is called once per frame
     void Update () {
-        m_Length -= Time.deltaTime;
-
-        if (m_Length <= 0.0f)
+        m_Timer -= Time.deltaTime;
+        if (m_Timer <= 0.0f)
         {
+            Debug.Log("TIME UP");
             GameStateManager.Lose();
         }
+    }
+
+    public float GetTime()
+    {
+        return m_Length;
     }
 
     void OnMouseDown()

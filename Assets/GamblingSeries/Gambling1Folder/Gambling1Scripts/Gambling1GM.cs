@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-public class Gambling1GM : MonoBehaviour
+public class Gambling1GM : MonoBehaviour, ITimeable
 {
     public RectTransform rectTransform;
     public float minX, maxX, minY, maxY;
@@ -51,6 +51,11 @@ public class Gambling1GM : MonoBehaviour
             GameStateManager.Lose();
         }
 
+    }
+
+    public float GetTime()
+    {
+        return time;
     }
     void TaskOnClick()
     {

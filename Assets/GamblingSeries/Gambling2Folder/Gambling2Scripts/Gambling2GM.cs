@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Gambling2GM : MonoBehaviour
+public class Gambling2GM : MonoBehaviour, ITimeable
 {
     public Sprite GiveMoney;
     public Sprite HoldMoney;
@@ -56,6 +56,11 @@ public class Gambling2GM : MonoBehaviour
                 StartCoroutine(ChangeSpriteForDuration());
             }
         }
+    }
+
+    public float GetTime()
+    {
+        return time;
     }
     private IEnumerator ChangeSpriteForDuration()
     {
