@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChooseDoorScript : MonoBehaviour
+public class ChooseDoorScript : MonoBehaviour, ITimeable
 {
     public Animator anim;
     public Text cardtext;
@@ -35,6 +35,11 @@ public class ChooseDoorScript : MonoBehaviour
             canchoose = false;
             GameStateManager.Win();
         }
+    }
+
+    public float GetTime()
+    {
+        return 5f;
     }
 
     private IEnumerator timer(){

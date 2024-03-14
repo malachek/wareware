@@ -363,6 +363,7 @@ MonoBehaviour:
   - drunk driving
   - Gambling2
   - CSGO_Snipe
+  - Choose The Door
   m_StartingLives: 5
   m_TimeScalingFactor: 0.075
   m_WinSound:

@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gambling2.unity
     guid: bd412d4b8567941cc8cb34c623c4739a
+  - enabled: 1
+    path: Assets/Scenes/Choose The Door.unity
+    guid: bf1d08d2b8e5f43558f8001434433188
   m_configObjects: {}
