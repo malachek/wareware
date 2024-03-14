@@ -281,4 +281,10 @@ public class GameStateManager : MonoBehaviour
             Time.timeScale = _instance.m_CurrentTimeScale;
         }
     }
+
+    public static void QuitGame()
+    {
+        Debug.Log("QUIT");
+        Application.Quit();
+    }
 }
