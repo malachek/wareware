@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sleepy Joe.unity
     guid: 88edc49339fa20a408ec040f5e5285ce
+  - enabled: 1
+    path: Assets/Scenes/drunk driving.unity
+    guid: 8eada96e28d32e045bf3a37914866a94
   m_configObjects: {}
