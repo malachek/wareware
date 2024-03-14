@@ -17,6 +17,8 @@ public class NumberManager : MonoBehaviour
     private TextMeshProUGUI currentBox;
     private TextBoxInfo currentBoxInfo;
 
+    private bool numbersDone = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,7 @@ public class NumberManager : MonoBehaviour
 
     public void UpdateNumber(string number)
     {
-        currentBox.text += number;
+        if (!numbersDone) currentBox.text += number;
         counter++;
 
         if (counter >= currentBoxInfo.numberLimit)
@@ -45,6 +47,7 @@ public class NumberManager : MonoBehaviour
             {
                 //Won
                 payButton.SetActive(true);
+                numbersDone = true;
                 return;
             }
         }
