@@ -528,15 +528,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4497804afeb629040833bbd6a4e4e740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Minis:
-  - rmfz_SocialCreditKahoot1_Cutscene
+  m_StartingMinis:
+  - Choose The Door
   - Credit Card
-  - Sleepy Joe
+  - CSGO_Snipe
   - drunk driving
   - Gambling2
-  - CSGO_Snipe
-  - Choose The Door
-  m_StartingLives: 5
+  - rmfz_SocialCreditKahoot1_Cutscene
+  - Sleepy Joe
+  m_StartingLives: 1
   m_TimeScalingFactor: 0.075
   m_WinSound:
   - {fileID: 8300000, guid: 666b9b9eaa40278418a94d4e379ed223, type: 3}
@@ -558,6 +558,7 @@ MonoBehaviour:
   m_MusicAudioSource: {fileID: 409145803}
   m_TitleSceneName: START
   m_MainSceneName: Main
+  m_GameOverSceneName: GAME OVER
 --- !u!4 &409145802
 Transform:
   m_ObjectHideFlags: 0

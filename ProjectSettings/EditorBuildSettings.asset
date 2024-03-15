@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Choose The Door.unity
     guid: bf1d08d2b8e5f43558f8001434433188
+  - enabled: 1
+    path: Assets/Scenes/GAME OVER.unity
+    guid: a2e84790d91d2334bbff10ef2abd0732
   m_configObjects: {}
