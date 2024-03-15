@@ -87,7 +87,7 @@ public class MainManger : MonoBehaviour
 
     IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(m_CountDownBeatTime);
+        yield return new WaitForSeconds(m_CountDownBeatTime/2);
         for (int i = 3; i >= 1; i--)
         {
             m_CountDownAudioSource.clip = m_Counts[i];
@@ -97,6 +97,7 @@ public class MainManger : MonoBehaviour
         }
         m_CountDownAudioSource.clip = m_Counts[0];
         m_CountDownAudioSource.Play();
+        yield return new WaitForSeconds(m_CountDownBeatTime);
         Debug.Log("GO!");
         OpenGame();
     }

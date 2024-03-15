@@ -126,6 +126,7 @@ public class GameStateManager : MonoBehaviour
 
     public static void LoadMini()
     {
+        _instance.m_MusicAudioSource.Play();
         //remove back to back of the same
         int NewMiniIndex = Random.Range(0, m_MiniCount - 1);
         if (NewMiniIndex >= m_CurrentMiniIndex) { NewMiniIndex++; }
@@ -221,6 +222,8 @@ public class GameStateManager : MonoBehaviour
         //coroutine with animation
         m_State = GAMESTATE.MAIN;
 
+        _instance.m_MusicAudioSource.Stop();
+
         SceneManager.LoadScene(_instance.m_MainSceneName);
     }
 
@@ -241,9 +244,12 @@ public class GameStateManager : MonoBehaviour
         //coroutine with animation
         m_State = GAMESTATE.MAIN;
 
+        _instance.m_MusicAudioSource.Stop();
+        
+        LoseLife();
+
         SceneManager.LoadScene(_instance.m_MainSceneName);
 
-        LoseLife();
     }
 
     public static void GameOver()
