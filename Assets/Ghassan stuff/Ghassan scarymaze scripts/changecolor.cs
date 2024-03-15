@@ -257,7 +257,7 @@ public class changecolor : MonoBehaviour
         // so it can Wait for the lose sound to play before proceeding
         yield return new WaitForSeconds(10);
         isActive = false;
-        GameStateManager.LoseLife(); // Calling the static LoseLife method on GameStateManager
+        GameStateManager.Lose(); // Calling the static LoseLife method on GameStateManager
     }
     private void PlaySound(AudioClip clip)
     {

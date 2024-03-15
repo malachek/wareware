@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 573336352}
-  moveSpeed: 0.01
+  moveSpeed: 0.1
 --- !u!212 &1348619462
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
         // so it can Wait for the lose sound to play before proceeding
         yield return new WaitForSeconds(2);
 
-        GameStateManager.LoseLife(); // Calling the static LoseLife method on GameStateManager
+        GameStateManager.Lose(); // Calling the static LoseLife method on GameStateManager
     }
 
     // Method to reset player movement and animation states

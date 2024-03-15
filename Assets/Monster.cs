@@ -122,7 +122,7 @@ public class Monster : MonoBehaviour
         // so it can Wait for the lose sound to play before proceeding
         yield return new WaitForSeconds(10);
         isActive1 = false;
-        GameStateManager.LoseLife(); // Calling the static LoseLife method on GameStateManager
+        GameStateManager.Lose(); // Calling the static LoseLife method on GameStateManager
     }
     public void ResetPlayer()
     {
