@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 previousPosition;
     private Animator animator; // Reference to the Animator component
     private bool canMove = true; // Flag to control player movement
-    [SerializeField] private AudioClip loseSound; 
-    [SerializeField] private AudioClip winSound; 
+    [SerializeField] private AudioClip loseSound;
+    [SerializeField] private AudioClip winSound;
     private AudioSource audioSource;
 
     private void Start()
@@ -53,8 +53,17 @@ public class PlayerController : MonoBehaviour
         transform.localScale = theScale;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the player has collided with the winpoint
+        if (collision.gameObject.tag == "winpoint")
+        {
+            TriggerWin();
+        }
+    }
+
     public void TriggerWin()
-    { 
+    {
         StartCoroutine(WinGame()); // this is to Start the WinGame coroutine
     }
 
@@ -63,19 +72,11 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Win", true);
         canMove = false; // Disable the movement after winning
         audioSource.PlayOneShot(winSound);
-        GameObject badWolf = GameObject.FindWithTag("badwolf");
-        if (badWolf != null)
-        {
-            VillainController villainController = badWolf.GetComponent<VillainController>();
-            if (villainController != null)
-            {
-                villainController.enabled = false;
-            }
-        }
-        // Wait for the win sound to play before proceeding
-        yield return new WaitForSeconds(3);
 
-        GameStateManager.Win(); // Call the static Win method on GameStateManager
+        yield return new WaitForSeconds(2); // Wait for 2 seconds or for the duration of the win animation/sound
+
+        // Here you would call any game state management or transition to a win scene, etc.
+        GameStateManager.Win(); // Make sure GameStateManager is implemented and accessible
     }
 
     public void TriggerLose()
@@ -89,14 +90,9 @@ public class PlayerController : MonoBehaviour
         canMove = false; // Disable movement after losing
         audioSource.PlayOneShot(loseSound);
 
-        // so it can Wait for the lose sound to play before proceeding
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2); // Wait for the lose sound to play before proceeding
 
-<<<<<<<< HEAD:Assets/Ghassan/Ghassan scarymaze scripts/runbanana.cs
-        GameStateManager.Lose(); // Calling the static Lose method on GameStateManager
-========
-        GameStateManager.Lose(); // Calling the static LoseLife method on GameStateManager
->>>>>>>> Ghassan:Assets/Ghassan stuff/Ghassan scarymaze scripts/runbanana.cs
+        GameStateManager.Lose(); // Ensure there's a method to handle losing in your GameStateManager
     }
 
     // Method to reset player movement and animation states
@@ -105,6 +101,6 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Win", false);
         animator.SetBool("Lose", false);
         canMove = true; // Re-enable movement
-        // Additional logic to reset the player's state as needed
+        // Reset any other necessary states here
     }
 }

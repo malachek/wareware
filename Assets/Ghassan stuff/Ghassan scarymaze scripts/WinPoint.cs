@@ -2,20 +2,23 @@ using UnityEngine;
 
 public class WinPoint : MonoBehaviour
 {
-    public Transform scaryImageTransform; // Assign this in the inspector
-    public Vector3 targetPosition;       // Set this to the desired position
+    public VillainController villainController; // Assign the villain object with the VillainController script in the inspector
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("runplayer")) // Make sure your player has the "runplayer" tag
+        if (other.CompareTag("runplayer")) // Ensure your player has the "runplayer" tag
         {
-            scaryImageTransform.position = targetPosition;
+            // Stop the villain
+            if (villainController != null)
+            {
+                villainController.StopChasing();
+            }
 
-            // Assuming the PlayerController script is attached to the player object
-            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+            // Trigger the win condition in the PlayerController
+            PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
             {
-                playerController.TriggerWin(); // Call the TriggerWin method instead of Wingame
+                playerController.TriggerWin();
             }
         }
     }

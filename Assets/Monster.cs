@@ -1,135 +1,150 @@
 using System.Collections;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class TheGrinch : MonoBehaviour
 {
-    //private Animator targetAnimator;
-    //[SerializeField] private GameObject targetGameObject;
     private Camera mainCamera;
-    private Vector3 previousPosition;
-    private Animator animator;
-    private bool canMove = true;
-   // [SerializeField] private AudioClip loseSound;
-    [SerializeField] private AudioClip winSound;
-    private AudioSource audioSource;
+    private Vector3 offset;
+    public bool canMove = true;
     private int babyCounter = 0;
+    private Animator animator;
+    public Samurai samurai;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip winSound;
+    [SerializeField] private AudioClip loseSound;
+    private bool isActive = true;
     private GameObject babySpitObject;
     private GameObject babySpitObject1;
     private GameObject babySpitObject2;
-    private bool isActive1 = true;
-    // Add a public reference to the Samurai script
-    public Samurai samurai;
+    private float lastPositionX; // Added to keep track of the last x position
 
-    private void Start()
+    void Start()
     {
-      //  targetAnimator = targetGameObject.GetComponent<Animator>();
         mainCamera = Camera.main;
-        previousPosition = transform.position;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        babySpitObject = GameObject.FindWithTag("babyspit");
-        babySpitObject1 = GameObject.FindWithTag("babyspit1");
-        babySpitObject2 = GameObject.FindWithTag("babyspit2");
-        StartCoroutine(LoseGame4());
+        babySpitObject = GameObject.FindGameObjectWithTag("babyspit");
+        babySpitObject1 = GameObject.FindGameObjectWithTag("babyspit1");
+        babySpitObject2 = GameObject.FindGameObjectWithTag("babyspit2");
+        lastPositionX = transform.position.x; // Initialize lastPositionX with the starting x position
+        ResetOrStartLoseGameTimer();
     }
 
-    private void Update()
+    void Update()
     {
+        if (Input.GetMouseButtonDown(0) && canMove)
+        {
+            Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPos.z = 0; // Ensure we don't move the monster in Z-axis
+            offset = transform.position - mouseWorldPos;
+        }
+
         if (Input.GetMouseButton(0) && canMove)
         {
-            Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0f;
-            Vector3 moveDirection = mousePosition - previousPosition;
-            transform.position = mousePosition;
-            if (moveDirection.x < 0 && transform.localScale.x > 0) FlipSprite();
-            else if (moveDirection.x > 0 && transform.localScale.x < 0) FlipSprite();
-            previousPosition = mousePosition;
-            animator.SetTrigger("Idle");
-            
+            DragMonster();
         }
-         
+        animator.SetTrigger("Idle");
     }
 
-    private void FlipSprite()
+    void DragMonster()
     {
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
+        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition) + offset;
+        mousePosition.z = 0; // Keep monster on the same plane
+        transform.position = mousePosition;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Baby")
+        // Flip sprite based on the direction of movement
+        if (transform.position.x < lastPositionX)
         {
-            Destroy(collision.gameObject);
+            // Moving left
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (transform.position.x > lastPositionX)
+        {
+            // Moving right
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        lastPositionX = transform.position.x; // Update lastPositionX to the new position for the next frame
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Baby"))
+        {
+            Destroy(other.gameObject); // Optionally, play a sound or animation here
             babyCounter++;
-            if (babyCounter >= 3)
-               
-
-
-            TriggerWin4();
+            if (babyCounter >= 3) // Assuming you need to collect 3 babies to win
+            {
+                StartCoroutine(TriggerWinCondition());
+            }
         }
     }
 
-    public void TriggerWin4()
-    {
-        StartCoroutine(WinGame4());
-    }
-
-    private IEnumerator WinGame4()
+    IEnumerator TriggerWinCondition()
     {
         canMove = false;
-        samurai.MoveOnWin();
+        //ebug.Log("we have " + babyCounter);
+        // Uncomment the next lines if you have these set up
+        //audioSource.PlayOneShot(winSound);
         samurai.Samueaiaudio();
-        yield return new WaitForSeconds(2);
         
+        yield return new WaitForSeconds(3);//ssuming your samurai script has this method for win condition
+        samurai.MoveOnWin();
+        animator.SetTrigger("Monsterdeath");
         samurai.playanime();
-        if (canMove == false)
+        
+        yield return new WaitForSeconds(0.1f);
+        ScaleAndMoveBabySpitObjects();
+        GameStateManager.Win(); // Make sure GameStateManager is properly implemented
+    }
+
+    void ScaleAndMoveBabySpitObjects()
+    {
+        if (babySpitObject != null)
         {
-            Debug.Log("Attempting to play Monsterdeath animation");
-            animator.SetTrigger("Monsterdeath");
             babySpitObject.transform.localScale += new Vector3(1, 1, 1);
-            babySpitObject.transform.position += new Vector3(1, -0.8f, 1);
-            babySpitObject1.transform.localScale += new Vector3(1, 1, 1);
-            babySpitObject1.transform.position += new Vector3(2, -0.8f, 1);
-            babySpitObject2.transform.localScale += new Vector3(1, 1, 1);
-            babySpitObject2.transform.position += new Vector3(3, -0.8f, 1);
+            babySpitObject.transform.position += new Vector3(1, -0.8f, 0);
         }
-        //animator.SetTrigger("Monsterdeath");
-        //targetAnimator.SetTrigger("hitting");
-        // animator.SetBool("Win", true);
 
-        // audioSource.PlayOneShot(winSound);
-        yield return new WaitForSeconds(winSound.length);
+        if (babySpitObject1 != null)
+        {
+            babySpitObject1.transform.localScale += new Vector3(1, 1, 1);
+            babySpitObject1.transform.position += new Vector3(2, -0.8f, 0);
+        }
 
-        // Call MoveOnWin on the Samurai instance
-        //if (samurai != null) samurai.MoveOnWin();
-        //else Debug.LogError("Samurai reference not set in the Monster script.");
-
-        GameStateManager.Win();
-    }
-    public void TriggerLose4()
-    {
-        StartCoroutine(LoseGame4()); // Start the LoseGame coroutine
+        if (babySpitObject2 != null)
+        {
+            babySpitObject2.transform.localScale += new Vector3(1, 1, 1);
+            babySpitObject2.transform.position += new Vector3(3, -0.8f, 0);
+        }
     }
 
-    private IEnumerator LoseGame4()
+    private IEnumerator LoseGameTimer()
     {
-        //animator.SetBool("Lose", true);
-        canMove = false; // Disable movement after losing
-        //audioSource.PlayOneShot(loseSound);
-
-        // so it can Wait for the lose sound to play before proceeding
-        yield return new WaitForSeconds(10);
-        isActive1 = false;
-        GameStateManager.Lose(); // Calling the static LoseLife method on GameStateManager
+        yield return new WaitForSeconds(10); // Lose after 10 seconds, adjust as necessary
+        if (isActive)
+        {
+            canMove = false;
+            // Uncomment the next line if you have a lose animation
+            //animator.SetTrigger("Lose");
+            audioSource.PlayOneShot(loseSound);
+            GameStateManager.Lose(); // Call your game state manager's lose method
+        }
     }
-    public void ResetPlayer()
+
+    public void ResetOrStartLoseGameTimer()
     {
-        animator.SetBool("Win", false);
-        animator.SetBool("Lose", false);
-        canMove = true;
+      //  StopCoroutine(LoseGameTimer());
+        StartCoroutine(LoseGameTimer());
+    }
+
+    public void ResetGame()
+    {
         babyCounter = 0;
+        canMove = true;
+        isActive = true;
+        animator.ResetTrigger("Win");
+        animator.ResetTrigger("Lose");
+        lastPositionX = transform.position.x; // Reset lastPositionX
+        // Reset any other necessary states here
     }
 }
-

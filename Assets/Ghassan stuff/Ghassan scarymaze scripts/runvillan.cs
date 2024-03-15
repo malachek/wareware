@@ -1,31 +1,33 @@
-using TMPro;
 using UnityEngine;
 
 public class VillainController : MonoBehaviour
 {
-    public Transform playerTransform; // Assign this in the editor
+    public Transform playerTransform;
     public float moveSpeed = 2.0f;
 
     private void Update()
     {
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
-        transform.position += direction * moveSpeed;
+        if (this.enabled && playerTransform != null)
+        {
+            Vector3 direction = (playerTransform.position - transform.position).normalized;
+            transform.position += direction * moveSpeed * Time.deltaTime;
+        }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("runplayer")) // Make sure your player has the "runplayer" tag
+        if (other.CompareTag("runplayer")) // Assuming your player has the tag "runplayer"
         {
-            
-
-            // Assuming the PlayerController script is attached to the player object
-            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+            PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
             {
-                playerController.TriggerLose(); // Call the TriggerWin method instead of Wingame
+                playerController.TriggerLose(); // Trigger the loss condition
             }
         }
     }
+
+    public void StopChasing()
+    {
+        this.enabled = false;
+    }
 }
-
-
-
