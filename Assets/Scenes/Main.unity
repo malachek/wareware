@@ -1763,6 +1763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CountDownAudioSource: {fileID: 1201983947}
+  m_BGMusic: {fileID: 1201983948}
   m_CountDownBeatTime: 0.6
   m_Counts:
   - {fileID: 8300000, guid: d2d6265fc7d97c940bf97f50ff5b942d, type: 3}

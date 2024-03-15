@@ -9,6 +9,9 @@ public class MainManger : MonoBehaviour
 
     [SerializeField]
     AudioSource m_CountDownAudioSource;
+
+    [SerializeField]
+    AudioSource m_BGMusic;
     
     [SerializeField]
     float m_CountDownBeatTime;
@@ -40,6 +43,7 @@ public class MainManger : MonoBehaviour
     
     private void Awake()
     {
+        m_BGMusic.pitch = Time.timeScale;
         int lives = GameStateManager.m_CurrentLives;
         Debug.Log("Time scale - " + Time.timeScale);
         for(int i = 4 - lives; i >= 0; i--)

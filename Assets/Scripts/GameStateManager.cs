@@ -107,6 +107,7 @@ public class GameStateManager : MonoBehaviour
 
         _instance.m_CurrentTimeScale = 1.0f;
         Time.timeScale = 1.0f;
+        score = 0;
         _instance.m_SFXAudioSource.Stop();
         _instance.m_SFXAudioSource.pitch = 1.0f;
         _instance.m_MusicAudioSource.pitch = 1.0f;
@@ -126,6 +127,7 @@ public class GameStateManager : MonoBehaviour
 
     public static void LoadMini()
     {
+        _instance.m_MusicAudioSource.pitch = Time.timeScale;
         _instance.m_MusicAudioSource.Play();
         //remove back to back of the same
         int NewMiniIndex = Random.Range(0, m_MiniCount - 1);
@@ -203,11 +205,12 @@ public class GameStateManager : MonoBehaviour
 
         score++;
 
+        _instance.UpdateTimeScale();
+
         AudioClip randomClip = _instance.m_WinSound[Random.Range(0,_instance.m_WinSound.Count)];
         _instance.m_SFXAudioSource.clip = randomClip;
         _instance.m_SFXAudioSource.Play();
 
-        _instance.UpdateTimeScale();
         //_instance.m_CurrentTimeScale *= (1 + _instance.m_TimeScalingFactor);
         //Time.timeScale = _instance.m_CurrentTimeScale;
         _instance.m_MusicAudioSource.pitch = _instance.m_CurrentTimeScale; ;
