@@ -8,7 +8,7 @@ public class Gambling1GM : MonoBehaviour, ITimeable
     public RectTransform rectTransform;
     public float minX, maxX, minY, maxY;
 
-    public float time = 10f;
+    public float time = 8.0f;
 
     public bool gamewon;
 
@@ -25,8 +25,14 @@ public class Gambling1GM : MonoBehaviour, ITimeable
 
     private AudioSource _audiosource;
 
+    public TextMeshProUGUI DeathText;
+
+    public TextMeshProUGUI WinText;
+
     void Start()
     {
+        DeathText.gameObject.SetActive(false);
+        WinText.gameObject.SetActive(false);
         btn.onClick.AddListener(TaskOnClick);
         _audiosource = GetComponent<AudioSource>();
         KObar.fillAmount = 1;
@@ -37,6 +43,7 @@ public class Gambling1GM : MonoBehaviour, ITimeable
         time -= Time.deltaTime;
         if (KObar.fillAmount <= 0.0f && time >= 0)
         {
+            WinText.gameObject.SetActive(true);
             Boxer.sprite = BoxerDefeated;
             Boxer.transform.position = new Vector3(0, -5, 0);
             gamewon = true;
@@ -46,6 +53,7 @@ public class Gambling1GM : MonoBehaviour, ITimeable
         else if (KObar.fillAmount > 0.0f && time <= 0)
         {
             Boxer.sprite = BoxerWins;
+            DeathText.gameObject.SetActive(true);
             Boxer.transform.position = new Vector3(0, -1.5f, 0);
             gamewon = false;
             GameStateManager.Lose();
@@ -61,7 +69,7 @@ public class Gambling1GM : MonoBehaviour, ITimeable
     {
         if (time > 0)
         {
-            KObar.fillAmount -= 0.15f;
+            KObar.fillAmount -= 0.22f;
             _audiosource.Play();
             Vector2 newPos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
             rectTransform.anchoredPosition = newPos;

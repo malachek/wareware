@@ -9,7 +9,7 @@ public class Gambling2GM : MonoBehaviour, ITimeable
     public Sprite HoldMoney;
     public Image GambleBar;
 
-    public float time = 10.0f;
+    private float time = 8.0f;
     public bool gamewon;
 
     public SpriteRenderer slotmachine;
@@ -33,7 +33,7 @@ public class Gambling2GM : MonoBehaviour, ITimeable
 
     void Update()
     {
-        time -= Time.deltaTime * Time.timeScale;
+        time -= Time.deltaTime;
         if (GambleBar.fillAmount >= 1.0f && time >= 0)
         {
             gamewon = true;
@@ -45,7 +45,6 @@ public class Gambling2GM : MonoBehaviour, ITimeable
         {
             gamewon = false;
             slotmachine.sprite = losescreen;
-            GameStateManager.Lose();
         }
 
         if (Input.GetKeyDown(KeyCode.A) && time >= 0)
