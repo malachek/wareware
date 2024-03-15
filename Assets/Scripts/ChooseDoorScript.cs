@@ -25,12 +25,12 @@ public class ChooseDoorScript : MonoBehaviour, ITimeable
     // Update is called once per frame
     void Update()
     {
-        if(canchoose && Input.GetKeyDown("left")){
+        if(canchoose && (Input.GetKeyDown("left") || Input.GetKeyDown("a"))){
             anim.SetTrigger("left");
             canchoose = false;
             GameStateManager.Win();
         }
-        else if(canchoose && Input.GetKeyDown("right")){
+        else if(canchoose && (Input.GetKeyDown("right") || Input.GetKeyDown("d"))){
             anim.SetTrigger("right");
             canchoose = false;
             GameStateManager.Win();
