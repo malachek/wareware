@@ -536,7 +536,7 @@ MonoBehaviour:
   - Gambling2
   - rmfz_SocialCreditKahoot1_Cutscene
   - Sleepy Joe
-  m_StartingLives: 1
+  m_StartingLives: 5
   m_TimeScalingFactor: 0.075
   m_WinSound:
   - {fileID: 8300000, guid: 666b9b9eaa40278418a94d4e379ed223, type: 3}
