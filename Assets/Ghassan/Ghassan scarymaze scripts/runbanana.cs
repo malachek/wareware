@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void TriggerWin()
-    {
+    { 
         StartCoroutine(WinGame()); // this is to Start the WinGame coroutine
     }
 
@@ -63,7 +63,15 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Win", true);
         canMove = false; // Disable the movement after winning
         audioSource.PlayOneShot(winSound);
-
+        GameObject badWolf = GameObject.FindWithTag("badwolf");
+        if (badWolf != null)
+        {
+            VillainController villainController = badWolf.GetComponent<VillainController>();
+            if (villainController != null)
+            {
+                villainController.enabled = false;
+            }
+        }
         // Wait for the win sound to play before proceeding
         yield return new WaitForSeconds(3);
 
@@ -81,10 +89,14 @@ public class PlayerController : MonoBehaviour
         canMove = false; // Disable movement after losing
         audioSource.PlayOneShot(loseSound);
 
-        // Wait for the lose sound to play before proceeding
-        yield return new WaitForSeconds(3);
+        // so it can Wait for the lose sound to play before proceeding
+        yield return new WaitForSeconds(2);
 
+<<<<<<<< HEAD:Assets/Ghassan/Ghassan scarymaze scripts/runbanana.cs
         GameStateManager.Lose(); // Calling the static Lose method on GameStateManager
+========
+        GameStateManager.Lose(); // Calling the static LoseLife method on GameStateManager
+>>>>>>>> Ghassan:Assets/Ghassan stuff/Ghassan scarymaze scripts/runbanana.cs
     }
 
     // Method to reset player movement and animation states
