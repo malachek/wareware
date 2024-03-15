@@ -3,7 +3,24 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+<<<<<<< HEAD
   tags: []
+=======
+  tags:
+  - WinPoint
+  - runplayer
+  - scaryimage
+  - bird
+  - BlueGirl
+  - Monster
+  - Baby
+  - Samurai
+  - babyspit
+  - babyspit1
+  - babyspit2
+  - Wall
+  - badwolf
+>>>>>>> Ghassan
   layers:
   - Default
   - TransparentFX
@@ -41,3 +58,36 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+<<<<<<< HEAD
+=======
+  - name: grass
+    uniqueID: 500121785
+    locked: 0
+  - name: scary
+    uniqueID: 1028986381
+    locked: 0
+  - name: player
+    uniqueID: 3926003457
+    locked: 0
+  - name: backbed
+    uniqueID: 1085001147
+    locked: 0
+  - name: baby
+    uniqueID: 842263145
+    locked: 0
+  - name: front bed
+    uniqueID: 3107659435
+    locked: 0
+  - name: Monster
+    uniqueID: 2663814183
+    locked: 0
+  - name: Samurai
+    uniqueID: 3029361181
+    locked: 0
+  - name: wall
+    uniqueID: 3670193573
+    locked: 0
+  - name: warewolf
+    uniqueID: 165370279
+    locked: 0
+>>>>>>> Ghassan

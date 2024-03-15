@@ -15,13 +15,13 @@ public class Bird1 : MonoBehaviour
         while (isMoving) // Only continue the loop if isMoving is true
         {
             // Move right for 5 units
-            yield return Move(Vector2.right * 13);
+            yield return Move(Vector2.right * 4);
             // Move down for 2 units
-            yield return Move(Vector2.down * 2);
+            yield return Move(Vector2.down * 0);
             // Move left for 5 units
-            yield return Move(Vector2.left * 13);
+            yield return Move(Vector2.left * 4);
             // Move up for 2 units
-            yield return Move(Vector2.up * 2);
+            yield return Move(Vector2.up * 0);
         }
     }
 

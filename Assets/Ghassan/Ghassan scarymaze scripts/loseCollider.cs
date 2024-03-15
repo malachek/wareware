@@ -9,7 +9,7 @@ public class LoseCollider : MonoBehaviour
             PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
             {
-                if (!gameObject.CompareTag("Wall")) // If it's not a wall, it's a lose condition
+                if (gameObject.CompareTag("Wall")) // If it's a wall, it's a lose condition
                 {
                     playerController.TriggerLose(); // Triggering the lose sequence here
                 }
@@ -17,3 +17,7 @@ public class LoseCollider : MonoBehaviour
         }
     }
 }
+//if (!gameObject.CompareTag("Wall")) // If it's not a wall, it's a lose condition
+//{
+ //   playerController.TriggerLose(); // Triggering the lose sequence here
+//}
