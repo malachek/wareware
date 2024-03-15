@@ -7,6 +7,7 @@ public class WakeyWakey : MonoBehaviour
 {
     public Image joeBackground;
     public Sprite sleepyJoeSprite;
+    public GameObject zzzAnimation;
 
     [Space(10)]
     [Header("Timers xD")]
@@ -27,6 +28,8 @@ public class WakeyWakey : MonoBehaviour
 
         audioController.JoeSound();
         joeBackground.sprite = sleepyJoeSprite;
+
+        zzzAnimation.SetActive(false);
 
         yield return new WaitForSeconds(endGameTime);
 
