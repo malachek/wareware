@@ -22,11 +22,11 @@ public class drunk_driving_move : MonoBehaviour
         }
         if(Input.GetKeyDown("w"))
         {
-            rb.velocity = Vector2.left * velocity * 2;
+            rb.velocity = Vector2.left * velocity * 1;
         }
         if(Input.GetKeyDown("a"))
         {
-            rb.velocity = Vector2.right * velocity * 2;
+            rb.velocity = Vector2.right * velocity * 1;
         }
         if(Input.GetKeyDown("s"))
         {
