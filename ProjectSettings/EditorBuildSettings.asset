@@ -56,4 +56,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Monster.unity
     guid: e7e09deaef615e644ac267d077965c81
+  - enabled: 1
+    path: Assets/Scenes/Knify Fingy Game.unity
+    guid: cdadd3e7a0f215349b94ea319ad3eaf0
   m_configObjects: {}
