@@ -131,7 +131,7 @@ using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
 
-public class changecolor : MonoBehaviour
+public class changecolor : MonoBehaviour, ITimeable
 {
     private Animator squareAnimator; // Animator for the enemy square
     private Animator blueGirlAnimator; // Animator for the BlueGirl
@@ -183,6 +183,11 @@ public class changecolor : MonoBehaviour
         }
         
 
+    }
+
+    public float GetTime()
+    {
+        return 10f;
     }
 
     private void FollowMouse()

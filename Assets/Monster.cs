@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class TheGrinch : MonoBehaviour
+public class TheGrinch : MonoBehaviour, ITimeable
 {
     private Camera mainCamera;
     private Vector3 offset;
@@ -28,6 +28,11 @@ public class TheGrinch : MonoBehaviour
         babySpitObject2 = GameObject.FindGameObjectWithTag("babyspit2");
         lastPositionX = transform.position.x; // Initialize lastPositionX with the starting x position
         ResetOrStartLoseGameTimer();
+    }
+
+    public float GetTime()
+    {
+        return 10f;
     }
 
     void Update()
