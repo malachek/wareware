@@ -3,7 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - WinPoint
+  - scaryimage
+  - runplayer
+  - Wall
+  - babyspit1
+  - Baby
+  - babyspit2
+  - Samurai
+  - Monster
+  - babyspit
+  - BlueGirl
+  - bird
+  - badwolf
   layers:
   - Default
   - TransparentFX
@@ -40,4 +53,55 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Backbed
+    uniqueID: 2670887017
+    locked: 0
+  - name: Baby
+    uniqueID: 3864274855
+    locked: 0
+  - name: Babt1
+    uniqueID: 2841683665
+    locked: 0
+  - name: Baby2
+    uniqueID: 2946674995
+    locked: 0
+  - name: Baby
+    uniqueID: 1662266499
+    locked: 0
+  - name: Frontbed
+    uniqueID: 2482711017
+    locked: 0
+  - name: Samurai
+    uniqueID: 654022405
+    locked: 0
+  - name: New Layer 12
+    uniqueID: 3358644919
+    locked: 0
+  - name: babyspit2
+    uniqueID: 2422939731
+    locked: 0
+  - name: babyspit
+    uniqueID: 1205867441
+    locked: 0
+  - name: babyspit1
+    uniqueID: 30328105
+    locked: 0
+  - name: Monster
+    uniqueID: 930923223
+    locked: 0
+  - name: grass
+    uniqueID: 3893122195
+    locked: 0
+  - name: women
+    uniqueID: 1396350067
+    locked: 0
+  - name: warewolf
+    uniqueID: 2651829663
+    locked: 0
+  - name: New Layer 17
+    uniqueID: 2613882405
+    locked: 0
+  - name: collider
+    uniqueID: 3123492973
     locked: 0
