@@ -24,7 +24,7 @@ public class IsClicked : MonoBehaviour, ITimeable
         m_Timer -= Time.deltaTime;
         if (m_Timer <= 0.0f)
         {
-            Debug.Log("TIME UP");
+            anim.SetBool(PRESS_ANIM, true);
             GameStateManager.Lose();
         }
     }

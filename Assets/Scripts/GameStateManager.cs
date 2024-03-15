@@ -8,15 +8,16 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using static GameStateManager;
-using System.Linq;
 
 public class GameStateManager : MonoBehaviour
 {
     [Header("CSGO_Snipe")]
     [Tooltip("If you have a sequential series of minigames, only put the first as '{name} 0'")]
+
+    [SerializeField] 
+    List<string> m_StartingMinis = new List<string>();
     
-    [SerializeField]
-    List<string> m_Minis = new List<string>();
+    public List<string> m_Minis { get; private set; }
 
     //================================//
 
@@ -44,7 +45,7 @@ public class GameStateManager : MonoBehaviour
     AudioSource m_MusicAudioSource;
 
     [SerializeField]
-    string m_TitleSceneName, m_MainSceneName;
+    string m_TitleSceneName, m_MainSceneName, m_GameOverSceneName;
 
     //================================//
 
@@ -85,7 +86,6 @@ public class GameStateManager : MonoBehaviour
         if(_instance == null)
         {
             _instance = this;
-            m_CurrentLives = 0;
             DontDestroyOnLoad(_instance);
         }
         else
@@ -98,6 +98,12 @@ public class GameStateManager : MonoBehaviour
     public static void NewGame()
     {
         Debug.Log("NEW GAME");
+
+        _instance.m_Minis = new List<string>();
+        foreach (string miniString in _instance.m_StartingMinis)
+        {
+            _instance.m_Minis.Add(miniString);
+        }
 
         _instance.m_CurrentTimeScale = 1.0f;
         Time.timeScale = 1.0f;
@@ -243,8 +249,8 @@ public class GameStateManager : MonoBehaviour
     {
         Debug.Log("GAME OVER");
 
-        AudioClip randomClip = null;
-        if (score > 10)
+        AudioClip randomClip;
+        if (score > 13)
         {
             randomClip = _instance.m_GameOverGoodSound[Random.Range(0, _instance.m_GameOverGoodSound.Count)];
         }
@@ -256,16 +262,12 @@ public class GameStateManager : MonoBehaviour
         _instance.m_SFXAudioSource.Play();
 
         m_State = GAMESTATE.GAMEOVER;
-        SceneManager.LoadScene(_instance.m_TitleSceneName);
+        SceneManager.LoadScene(_instance.m_GameOverSceneName);
     }
 
     public static void LoseLife()
     {
         m_CurrentLives--;
-        if (m_CurrentLives <= 0)
-        {
-            GameOver();
-        }
     }
 
     public static void TogglePause()
@@ -280,5 +282,18 @@ public class GameStateManager : MonoBehaviour
             m_State = GAMESTATE.PLAYING;
             Time.timeScale = _instance.m_CurrentTimeScale;
         }
+    }
+
+    public static void QuitGame()
+    {
+        Debug.Log("QUIT");
+        Application.Quit();
+    }
+
+    public static void RunItBack()
+    {
+        _instance.m_MusicAudioSource.Stop();
+        _instance.m_SFXAudioSource.Stop();
+        Destroy(_instance);
     }
 }

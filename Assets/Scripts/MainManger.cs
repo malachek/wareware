@@ -15,15 +15,50 @@ public class MainManger : MonoBehaviour
 
     [SerializeField]
     List<AudioClip> m_Counts;
+
+    //[SerializeField]
+    //TextMeshProUGUI m_TextLives;
+
+    [SerializeField]
+    List<GameObject> m_BloodSplats;
+
+    [SerializeField]
+    TextMeshProUGUI m_TextHints;
     
     [SerializeField]
-    TextMeshProUGUI m_TextLives;
+    string[] m_RandomHints;
+
+    [SerializeField]
+    HealthHints[] m_LifeBasedHints;
+
+    [SerializeField]
+    Image m_Background;
+
+    [SerializeField]
+    List<Sprite> m_Backgrounds;
+
     
     private void Awake()
     {
-        Debug.Log("YO");
+        int lives = GameStateManager.m_CurrentLives;
         Debug.Log("Time scale - " + Time.timeScale);
-        m_TextLives.text = GameStateManager.m_CurrentLives + " <3";
+        for(int i = 4 - lives; i >= 0; i--)
+        {
+            Debug.Log("health " + i);
+            m_BloodSplats[i].SetActive(true);
+            
+        }
+
+        m_Background.sprite = m_Backgrounds[Random.Range(0, m_Backgrounds.Count)];
+
+        RandomHint(lives);
+
+        if (lives <= 0)
+        {
+            StartCoroutine(NoLives());
+            return;
+        }
+
         StartCoroutine(CountDown());
         
     }
@@ -31,7 +66,25 @@ public class MainManger : MonoBehaviour
     {
         GameStateManager.LoadMini();
     }
-    
+
+    private void RandomHint(int lives)
+    {
+        bool lifeSensitive = Random.Range(0, (lives+1)/2 + 1) == 0; //more likely to be curated to lives when at lower health
+
+        if(lifeSensitive)
+        {
+            m_TextHints.text = m_LifeBasedHints[lives].GetRandomHint();
+        }
+        else
+        {
+            m_TextHints.text = m_RandomHints[Random.Range(0, m_RandomHints.Length)];
+        }
+
+
+        //else
+
+    }
+
     IEnumerator CountDown()
     {
         yield return new WaitForSeconds(m_CountDownBeatTime);
@@ -46,5 +99,22 @@ public class MainManger : MonoBehaviour
         m_CountDownAudioSource.Play();
         Debug.Log("GO!");
         OpenGame();
+    }
+
+    IEnumerator NoLives()
+    {
+        yield return new WaitForSeconds(3f);
+        GameStateManager.GameOver();
+    }
+}
+
+[System.Serializable]
+public class HealthHints
+{
+    public string[] hints;
+    
+    public string GetRandomHint()
+    {
+        return hints[Random.Range(0, hints.Length)];
     }
 }
