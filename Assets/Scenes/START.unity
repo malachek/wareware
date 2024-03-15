@@ -559,6 +559,10 @@ MonoBehaviour:
   m_TitleSceneName: START
   m_MainSceneName: Main
   m_GameOverSceneName: GAME OVER
+  L: 1.5
+  b: 7
+  k: 0.2
+  x0: 3.5
 --- !u!4 &409145802
 Transform:
   m_ObjectHideFlags: 0
@@ -1660,7 +1664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11.830017, y: 3.9400024}
+  m_AnchoredPosition: {x: -11.830078, y: 3.9400024}
   m_SizeDelta: {x: 118.25, y: 70.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1500727109

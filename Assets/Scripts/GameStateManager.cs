@@ -206,8 +206,9 @@ public class GameStateManager : MonoBehaviour
         _instance.m_SFXAudioSource.clip = randomClip;
         _instance.m_SFXAudioSource.Play();
 
-        _instance.m_CurrentTimeScale *= (1 + _instance.m_TimeScalingFactor);
-        Time.timeScale = _instance.m_CurrentTimeScale;
+        _instance.UpdateTimeScale();
+        //_instance.m_CurrentTimeScale *= (1 + _instance.m_TimeScalingFactor);
+        //Time.timeScale = _instance.m_CurrentTimeScale;
         _instance.m_MusicAudioSource.pitch = _instance.m_CurrentTimeScale; ;
         _instance.m_SFXAudioSource.pitch = _instance.m_CurrentTimeScale;
 
@@ -268,6 +269,18 @@ public class GameStateManager : MonoBehaviour
     public static void LoseLife()
     {
         m_CurrentLives--;
+    }
+
+    [Tooltip("Timescale = 1 + L / (1 + b * e ^ (-k * (wins - x0)))")]
+    [SerializeField] float L;
+    [SerializeField] float b;
+    [SerializeField] float k;
+    [SerializeField] float x0;
+    private const double E = 2.7182818284590451;
+    void UpdateTimeScale()
+    {
+        Time.timeScale = (float)(1 + L / (1 + b * System.Math.Pow(E, (-k * (score - x0)))));
+        Debug.Log("TimeScale: " + Time.timeScale);
     }
 
     public static void TogglePause()
