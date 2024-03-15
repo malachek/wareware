@@ -12,7 +12,7 @@ using System.Linq;
 
 public class GameStateManager : MonoBehaviour
 {
-    [Header("PUT THE SCENE NAMES FOR YOUR MINI GAMES IN THIS LIST")]
+    [Header("CSGO_Snipe")]
     [Tooltip("If you have a sequential series of minigames, only put the first as '{name} 0'")]
     
     [SerializeField]

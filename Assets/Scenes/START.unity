@@ -357,11 +357,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Minis:
-  - Win or Lose2
   - rmfz_SocialCreditKahoot1_Cutscene
   - Credit Card
-  - ScaryMaze
   - Sleepy Joe
+  - drunk driving
+  - Gambling2
+  - CSGO_Snipe
+  - Choose The Door
   m_StartingLives: 5
   m_TimeScalingFactor: 0.075
   m_WinSound:
