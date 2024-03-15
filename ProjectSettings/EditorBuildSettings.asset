@@ -6,17 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/START.unity
+    guid: f8b46acac8af93c419d93edc46ba8bd0
   - enabled: 1
     path: Assets/Scenes/Win or Lose1.unity
     guid: 92761fd5a4ab81d4da4f1d6f82422906
   - enabled: 1
-    path: Assets/Scenes/START.unity
-    guid: f8b46acac8af93c419d93edc46ba8bd0
-  - enabled: 1
     path: Assets/Scenes/Win or Lose2.unity
     guid: 063b8a7a84c3f7942800265296b1bdf4
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/rmfz_SocialCreditKahoot1_Cutscene.unity
     guid: e07e4fea6496b27489e0733ded65db74
