@@ -8,7 +8,7 @@ public class Gambling1GM : MonoBehaviour, ITimeable
     public RectTransform rectTransform;
     public float minX, maxX, minY, maxY;
 
-    public float time = 10f;
+    public float time = 8.0f;
 
     public bool gamewon;
 
