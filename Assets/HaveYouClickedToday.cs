@@ -8,6 +8,11 @@ public class HaveYouClickedToday : MonoBehaviour
     
     const string PRESS_ANIM = "clicked_screen";
 
+    void Start()
+    {
+        // targetGameObject.transform.position = Camera.main.ScreenToWorldPoint( Vector3(Screen.width/2, Screen.height/2, Camera.main.nearClipPlane) );
+    }
+
     void OnMouseDown()
     {
         anim.SetBool(PRESS_ANIM, true);
