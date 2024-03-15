@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knife : MonoBehaviour
+public class Knife : MonoBehaviour, ITimeable
 {
     public int count = 0;
-    float m_Length;
+    [SerializeField] float m_Length;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(TickTime());
     }
 
     // Update is called once per frame
@@ -21,6 +21,11 @@ public class Knife : MonoBehaviour
             //Debug.Log("Win Scene!");
             GameStateManager.Win();
         }
+    }
+
+    public float GetTime()
+    {
+        return m_Length;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
